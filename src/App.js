@@ -28,7 +28,7 @@ export default function App() {
 
   const customIcon = new Icon({
     iconUrl: require("./img/icon.png"),
-    iconSize: [38, 38]
+    iconSize: [30, 30]
   });
 
   const createCustomClusterIcon = (cluster) => {
@@ -40,7 +40,7 @@ export default function App() {
   };
 
   return (
-    <MapContainer center={[15.5039, -88.0139]} zoom={13}>
+    <MapContainer center={[15.5039, -88.0139]} zoom={12}>
       <TileLayer
         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
