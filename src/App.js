@@ -1,44 +1,65 @@
 import './App.css';
 import "leaflet/dist/leaflet.css"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon } from 'leaflet';
+import { Icon, divIcon, point } from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+// import cluster from 'cluster';
 
 export default function App() {
   // markers
   const markers = [
     {
-      geocode: [48.86, 2.3522],
-      popUp: "pop up 1"
+      geocode: [29.72556943573647, -95.39052521099289],
+      popUp: "Liberty, Meekness & Innocence"
     },
     {
-      geocode: [48.85, 2.3522],
-      popUp: "pop up 2"
+      geocode: [15.508401955627711, -88.05887342959872],
+      popUp: "Rotulo Coca-Cola"
     },
     {
-      geocode: [48.855, 2.34],
-      popUp: "pop up 3"
+      geocode: [40.75450483482303, -73.95631869815078],
+      popUp: "Our first dance"
+    },
+    {
+      geocode: [-27.189625103018596, -109.4425747839181],
+      popUp: "Where we'll watch the sunset"
     },
   ];
 
   const customIcon = new Icon({
     iconUrl: require("./img/icon.png"),
     iconSize: [38, 38]
-  })
+  });
+
+  const createCustomClusterIcon = (cluster) => {
+    return new divIcon({
+      html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
+      className: "custom-marker-cluster",
+      iconSize: point(33, 33, true)
+    });
+  };
 
   return (
-    <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+    <MapContainer center={[15.5039, -88.0139]} zoom={13}>
       <TileLayer
         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {markers.map(marker => (
-        <Marker position={marker.geocode} icon={customIcon}>
-          <Popup>{marker.popUp}</Popup>
-        </Marker>
-      ))
-
-      }
-
+      {/* <TileLayer
+        attribution='Stamen Watercolor'
+        url='https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg'
+      /> */}
+      <MarkerClusterGroup
+        chunkedLoading
+        iconCreateFunction={createCustomClusterIcon}
+      >
+        {markers.map(marker => (
+          <Marker position={marker.geocode} icon={customIcon}>
+            <Popup>{marker.popUp}</Popup>
+          </Marker>
+          ))
+        }
+      </MarkerClusterGroup>
     </MapContainer>
   );
 }
